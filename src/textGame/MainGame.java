@@ -24,31 +24,21 @@ public class MainGame
 		
 		x.init(x.inputNum(),x.inputNum());
 		x.generate();
-		System.out.println("x:"+x.playerX + " " + "y:"+x.playerY);
+		//System.out.println("x:"+x.playerX + " " + "y:"+x.playerY);
 		
-		x.printBoard(); //inital generation and player pos test
+		x.printBoard(); //inital generation and player pos test - works
 		
-		x.goNorth();
-		System.out.println("x:"+x.playerX + " " + "y:"+x.playerY);
+
+		//maybe move to init or generate - works
+		x.placeObject();
+		x.placeObject();
+		x.placeObject();
+		
+		x.placeEnemy();
+		x.placeEnemy();
+		x.placeEnemy();
+		
 		x.printBoard();
-		
-		x.goEast();
-		System.out.println("x:"+x.playerX + " " + "y:"+x.playerY);
-		x.printBoard();
-		
-		x.goSouth();
-		System.out.println("x:"+x.playerX + " " + "y:"+x.playerY);
-		x.printBoard();
-		
-		x.goSouth();
-		x.printBoard();
-		
-		x.goWest();
-		x.printBoard();
-		
-		System.out.println(x.generatorRange);
-		System.out.println(x.randomNum());
-		
 		
 		
 		
@@ -79,9 +69,12 @@ public class MainGame
 		    board[playerX][playerY] = "X";
 		    System.out.println(" ");
 		}	
+		System.out.println();
 	}	
+	
 	public void printBoard() //works
 	{
+		System.out.println("x:"+playerX + " " + "y:"+playerY);
 		for (int i = 0; i < board.length; i++) 
 		{
 		    for (int j = 0; j <board[i].length; j++) 
@@ -98,13 +91,6 @@ public class MainGame
 		Scanner input = new Scanner(System.in);
 		int a = input.nextInt();
 		return a;
-	}
-	
-	public int randomNum()
-	{
-//		Random generator = new Random(generatorRange);
-	
-		return 	(int) Math.floor(Math.random() * generatorRange);
 	}
 	
 	public void goNorth() //works
@@ -131,9 +117,41 @@ public class MainGame
 		board[playerY][playerX] = "X";
 	}
 	
+	public int randomNum() //works
+	{	
+		return 	(int) Math.floor(Math.random() * generatorRange);
+	}
+	
+	public void placeObject() //works with collision check
+	{
+		int x = randomNum();
+		int y = randomNum();
+		if(board[y][x] == "0")
+		{
+			board[y][x] = "O";
+		}
+		else
+		{
+			placeObject();
+		}
+	}
+	
+	public void placeEnemy() //works
+	{
+		int x = randomNum();
+		int y = randomNum();
+		if(board[y][x] == "0")
+		{
+			board[y][x] = "E";
+		}
+		else
+		{
+			placeEnemy();
+		}
+	}
 	
 	
-	public enum Directions
+	public enum Directions //works
 	{
 		  EAST, 
 		  WEST, 
