@@ -1,11 +1,14 @@
 package textGame;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class MainGame 
 {
 	int mapDimensionx;
 	int mapDimensiony;
+	
+	int generatorRange;
 	
 	int playerX;
 	int playerY;
@@ -43,6 +46,9 @@ public class MainGame
 		x.goWest();
 		x.printBoard();
 		
+		System.out.println(x.generatorRange);
+		System.out.println(x.randomNum());
+		
 		
 		
 		
@@ -55,10 +61,10 @@ public class MainGame
 	public void init(int x, int y) //set dimensions to odd number to start in middle
 	{
 		board = new String[y][x];
+		generatorRange = x;
+		
 		playerX = x/2;
-		playerY = y/2;
-		
-		
+		playerY = y/2;	
 	}
 	
 	public void generate() //works
@@ -92,6 +98,13 @@ public class MainGame
 		Scanner input = new Scanner(System.in);
 		int a = input.nextInt();
 		return a;
+	}
+	
+	public int randomNum()
+	{
+//		Random generator = new Random(generatorRange);
+	
+		return 	(int) Math.floor(Math.random() * generatorRange);
 	}
 	
 	public void goNorth() //works
