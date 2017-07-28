@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 public class MainGame 
 {
+	boolean gameOver = false;
+	
 	int mapDimensionx;
 	int mapDimensiony;
 	
@@ -41,7 +43,32 @@ public class MainGame
 		x.printBoard();
 		
 		
+		System.out.println();
 		
+		//while(x.gameOver == false)
+		//{
+			System.out.println("Which way master:");
+			String s = x.inputString();
+			switch (s)
+			{
+			case "NORTH":
+				x.goNorth();
+				break;
+			
+			case "EAST":
+				x.goEast();
+				break;
+				
+			case "SOUTH":
+				x.goSouth();
+				break;
+				
+			case "WEST":
+				x.goWest();		
+				break;
+			}	
+		//}
+		x.printBoard();
 		
 		
 		
@@ -90,6 +117,13 @@ public class MainGame
 	{
 		Scanner input = new Scanner(System.in);
 		int a = input.nextInt();
+		return a;
+	}
+	
+	public String inputString() // works
+	{
+		Scanner input = new Scanner(System.in);
+		String a = input.nextLine();
 		return a;
 	}
 	
@@ -158,5 +192,7 @@ public class MainGame
 		  NORTH, 
 		  SOUTH
 	}
+
+	
 	
 }
