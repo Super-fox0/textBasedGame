@@ -17,15 +17,28 @@ public class MainGame
 	
 	String[][] board;
 	
+	String tileValue;
+	
+	int itemCount =0;
+	
 
 	public static void main(String[] args) 
 	{
 		MainGame x = new MainGame();
 		
-		System.out.println("Enter Game board Dimensions X, Y");
+		System.out.println("Enter Your Hero's Name:");
+		Player p = new Player(x.inputString()); //set name for hero
 		
-		x.init(x.inputNum(),x.inputNum());
-		x.generate();
+		
+		System.out.println("Enter Game board Dimensions X, Y");
+		System.out.println();
+		
+		
+		
+		x.init(x.inputNum(),x.inputNum()); //make board -empty
+		
+		System.out.println(x.description() + p.getName()); // inital description
+		x.generate(); //place player
 		//System.out.println("x:"+x.playerX + " " + "y:"+x.playerY);
 		
 		x.printBoard(); //inital generation and player pos test - works
@@ -40,16 +53,18 @@ public class MainGame
 		x.placeEnemy();
 		x.placeEnemy();
 		
+		x.placeExit();
+		
 		x.printBoard();
 		
 		
 		System.out.println();
 		
-		//while(x.gameOver == false)
-		//{
+		while(x.gameOver == false)
+		{
 			System.out.println("Which way master:");
 			String s = x.inputString();
-			switch (s)
+			switch (s) //works
 			{
 			case "NORTH":
 				x.goNorth();
@@ -66,16 +81,22 @@ public class MainGame
 			case "WEST":
 				x.goWest();		
 				break;
-			}	
-		//}
-		x.printBoard();
+			}
+			x.printBoard();
+			x.encounterCheck();
+			x.objectCheck();
+			x.exitCheck();
+			
+			
+		}
+		
 		
 		
 		
 
 	}
 
-	public void init(int x, int y) //set dimensions to odd number to start in middle
+	public void init(int x, int y) //works
 	{
 		board = new String[y][x];
 		generatorRange = x;
@@ -130,24 +151,28 @@ public class MainGame
 	public void goNorth() //works
 	{
 		playerY =  playerY - 1;
+		tileValue = board[playerY][playerX];
 		board[playerY][playerX] = "X";
 	}
 	
 	public void goEast() //works
 	{
 		playerX = playerX + 1;
+		tileValue = board[playerY][playerX];
 		board[playerY][playerX] = "X";
 	}
 	
 	public void goSouth() //works
 	{
 		playerY = playerY + 1;
+		tileValue = board[playerY][playerX];
 		board[playerY][playerX] = "X";
 	}
 	
 	public void goWest() //works
 	{
 		playerX = playerX - 1;
+		tileValue = board[playerY][playerX];
 		board[playerY][playerX] = "X";
 	}
 	
@@ -156,7 +181,7 @@ public class MainGame
 		return 	(int) Math.floor(Math.random() * generatorRange);
 	}
 	
-	public void placeObject() //works with collision check
+	public void placeObject() //works 
 	{
 		int x = randomNum();
 		int y = randomNum();
@@ -184,15 +209,58 @@ public class MainGame
 		}
 	}
 	
-	
-	public enum Directions //works
+	public void placeExit() //works
 	{
-		  EAST, 
-		  WEST, 
-		  NORTH, 
-		  SOUTH
+		int x = randomNum();
+		int y = randomNum();
+		if(board[y][x] == "0")
+		{
+			board[y][x] = "T";
+		}
+		else
+		{
+			placeExit();
+		}
 	}
-
+	
+	public void encounterCheck() //works
+	{
+		if(tileValue == "E")
+		{
+			System.out.println("Enemy encountered, fight or die");
+		}
+	}
+	
+	public void objectCheck() //works
+	{
+		if(tileValue == "O")
+		{
+			itemCount = itemCount + 1;
+			System.out.println("You see something shiny by your feet and proceed to pick it up");
+		}
+	}
+	
+	public void exitCheck() //works  -- need to implement keys from enemies (power cores)
+	{
+		if(tileValue == "T")
+		{
+			System.out.println("You have stumbled upon a teleporter, as you pass through it you return to where you once came");
+			gameOver = true;
+		}
+	}
 	
 	
+//	public enum Directions //works
+//	{
+//		  EAST, 
+//		  WEST, 
+//		  NORTH, 
+//		  SOUTH
+//	}
+	
+	public String description()
+	{
+		String s = "You awake with nothing but a pair of torn shorts and your bare hands, you must survive this desolate waste land using your mind and courage to disuade any foe. you are the hero of your own fate ";
+		return s;
+	}
 }

@@ -5,10 +5,9 @@ public class Player
 	int health = 100;
 	String name;
 	
-	public Player(int health, String name) 
+	public Player(String name) 
 	{
 		super();
-		this.health = health;
 		this.name = name;
 	}
 	
@@ -21,9 +20,7 @@ public class Player
 	{
 		this.name = name;
 	}
-	
-	
-	
+		
 }
 
 
