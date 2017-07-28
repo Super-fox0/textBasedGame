@@ -1,5 +1,9 @@
 package textGame;
 
-public class Item {
+public class Item 
+{
 
+	String name;
+	int durability;
+	
 }

@@ -1,5 +1,9 @@
 package textGame;
 
-public class Enemie {
+public class Enemie 
+{
 
+	
+	
+	
 }
